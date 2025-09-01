@@ -1,0 +1,944 @@
+- id: '1678379382175'
+  alias: Battery Test
+  description: ''
+  use_blueprint:
+    path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
+    input:
+      threshold: 10
+      day: 6
+      exclude:
+        entity_id:
+        - sensor.ant_s_galaxy_tab_battery_level
+        - sensor.ant_s_note_20_battery_level
+      actions:
+      - data:
+          title: Battery Warning
+          message:
+            '[object Object]':
+        action: notify.mobile_app_ant_s_note_20
+      time: 08:00:00
+- id: '1683265479860'
+  alias: Office Dimmer Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: 55e74338f12f8d08fedf798ee65a62e2
+      helper_last_controller_event: input_text.office_dimmer_helper
+- id: '1683265517789'
+  alias: Office Dimmer Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: 55e74338f12f8d08fedf798ee65a62e2
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light_color_mode: Color Temperature
+      light: light.office_lights
+      on_brightness: 1
+- id: '1683265548788'
+  alias: Spare Bedroom Dimmer Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: 2fc7a7dd6010bf1ba8647e8a68e36457
+      helper_last_controller_event: input_text.spare_bedroom_dimmer_helper
+- id: '1683265586350'
+  alias: Spare Bedroom Dimmer Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: 2fc7a7dd6010bf1ba8647e8a68e36457
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light: light.spare_bedroom_light
+      light_color_mode: Color Temperature
+- id: '1685291346223'
+  alias: Living Room Dial LIghts
+  description: ''
+  use_blueprint:
+    path: GordonFreemanK/hue_tap_dial_switch.yaml
+    input:
+      switches:
+      - 20137085877b0640009711f6bde6849e
+      button_1_lights:
+      - light.living_room_light
+      button_2_lights:
+      - light.living_room_light
+      button_3_lights:
+      - light.living_room_ring_light
+      button_4_lights:
+      - light.living_room_ring_light
+- id: '1725719327679'
+  alias: Goodnight
+  description: Start my night-time routine
+  triggers:
+  - device_id: 54ee684eea4d34814d7f23ed2f5e6e25
+    domain: zha
+    type: remote_button_short_press
+    subtype: turn_on
+    trigger: device
+  conditions: []
+  actions:
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.sleep
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 500
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      label_id: controllable_lights
+  - type: turn_on
+    device_id: 327786d98b02ba54491c65cb70ccfa3f
+    entity_id: 3d62fc8636d226b931965b74a01200a3
+    domain: light
+    brightness_pct: 2
+  - delay:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 327786d98b02ba54491c65cb70ccfa3f
+    entity_id: 3d62fc8636d226b931965b74a01200a3
+    domain: light
+  mode: restart
+- id: '1725719484046'
+  alias: Turn-off Master Bedroom Light
+  description: ''
+  triggers:
+  - device_id: 54ee684eea4d34814d7f23ed2f5e6e25
+    domain: zha
+    type: remote_button_short_press
+    subtype: turn_off
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.master_bedroom_bedside_light
+  mode: single
+- id: '1730738241534'
+  alias: Hallway Dimmer A Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: 67fc0b1bc5b5badc5cb469b5047cdef6
+      helper_last_controller_event: input_text.hallway_dimmer_a_helper
+- id: '1730738285360'
+  alias: Hallway Dimmer B Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: d57c88b880de90e0dea5ee544efa0f37
+      helper_last_controller_event: input_text.hallway_dimmer_b_helper
+- id: '1730738310209'
+  alias: Hallway Dimmer C Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: d587193a878ffbb6243153aeca60387c
+      helper_last_controller_event: input_text.hallway_dimmer_c_helper
+- id: '1730738413847'
+  alias: Hallway Dimmer A Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: 67fc0b1bc5b5badc5cb469b5047cdef6
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light: light.hallway_lights
+      light_color_mode: Color Temperature
+- id: '1730738589204'
+  alias: Hallway Dimmer B Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: d57c88b880de90e0dea5ee544efa0f37
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light: light.hallway_lights
+      light_color_mode: Color Temperature
+- id: '1730738619805'
+  alias: Hallway Dimmer C Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: d587193a878ffbb6243153aeca60387c
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light: light.hallway_lights
+      light_color_mode: Color Temperature
+- id: '1732034277794'
+  alias: Kitchen Dimmer Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: ada84d2ab1b1e4cd93bc16d42197639c
+      helper_last_controller_event: input_text.kitchen_dimmer_helper
+- id: '1732034339949'
+  alias: Kitchen Dimmer Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: ada84d2ab1b1e4cd93bc16d42197639c
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light: light.all_kitchen_lights
+      light_color_mode: None
+- id: '1732114825056'
+  alias: Living Room Dimmer Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: c6d41f52436c7939d26ab2f1012ea63b
+      helper_last_controller_event: input_text.living_room_dimmer_helper
+- id: '1732114881276'
+  alias: Living Room Dimmer Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: c6d41f52436c7939d26ab2f1012ea63b
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light: light.living_room_light
+      light_color_mode: Auto
+- id: '1732198994807'
+  alias: Painting Light Dimmer Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: 700751fde424e072bbbae21d2f5e1084
+      helper_last_controller_event: input_text.painting_light_dimmer_helper
+- id: '1732199031658'
+  alias: Painting Light Dimmer Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: 700751fde424e072bbbae21d2f5e1084
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light: light.painting_light
+      light_color_mode: None
+- id: '1732615900246'
+  alias: X1C Top Light Automation
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.x1c_00m09a391300660_current_stage
+  - type: no_problem
+    device_id: 0dd7bb01cc7a62ec67ca8e3d9d042f02
+    entity_id: b0ed7bbe77b1822e6b40315d2a60ea18
+    domain: binary_sensor
+    trigger: device
+  - type: problem
+    device_id: 0dd7bb01cc7a62ec67ca8e3d9d042f02
+    entity_id: b0ed7bbe77b1822e6b40315d2a60ea18
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: sensor.x1c_00m09a391300660_current_stage
+        state: auto_bed_leveling
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.x1c_top_light
+    - conditions:
+      - condition: state
+        entity_id: sensor.x1c_00m09a391300660_current_stage
+        state: printing
+      - type: is_no_problem
+        condition: device
+        device_id: 0dd7bb01cc7a62ec67ca8e3d9d042f02
+        entity_id: b0ed7bbe77b1822e6b40315d2a60ea18
+        domain: binary_sensor
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          transition: 1
+        target:
+          entity_id: light.x1c_top_light
+    - conditions:
+      - condition: state
+        entity_id: sensor.x1c_00m09a391300660_current_stage
+        state: idle
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data:
+          transition: 1
+        target:
+          entity_id: light.x1c_top_light
+    - conditions:
+      - condition: state
+        entity_id: sensor.x1c_00m09a391300660_current_stage
+        state: offline
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data:
+          transition: 1
+        target:
+          entity_id: light.x1c_top_light
+    - conditions:
+      - condition: state
+        entity_id: sensor.x1c_00m09a391300660_current_stage
+        state: heatbed_preheating
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          transition: 1
+        target:
+          entity_id: light.x1c_top_light
+    - conditions:
+      - type: is_problem
+        condition: device
+        device_id: 0dd7bb01cc7a62ec67ca8e3d9d042f02
+        entity_id: b0ed7bbe77b1822e6b40315d2a60ea18
+        domain: binary_sensor
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.x1c_top_light
+  mode: single
+- id: '1732963518627'
+  alias: Kitchen Undercabinet Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: 9277ce9e2c5a2251d4f24be3d26ce69b
+      helper_last_controller_event: input_text.kitchen_undercabinet_dimmer_helper
+- id: '1732963583464'
+  alias: Kitchen Undercabinet Dimmer Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: 9277ce9e2c5a2251d4f24be3d26ce69b
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light: light.kitchen_undercabinet_lights
+- id: '1733313808209'
+  alias: Control Office AVR from Desktop
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.desktop
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.desktop
+        state: 'off'
+      sequence:
+      - action: media_player.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: media_player.officeavr
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.desktop
+        state: 'on'
+      sequence:
+      - action: media_player.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: media_player.officeavr
+  mode: single
+- id: '1733573255293'
+  alias: Front doorbell charge notifications
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.front_door_doorbell_battery
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: sensor.front_door_doorbell_battery
+        state: '80'
+      sequence:
+      - action: notify.mobile_app_ant_s_note_20
+        metadata: {}
+        data:
+          message: Battery charged
+          title: Front Doorbell
+    - conditions:
+      - condition: state
+        entity_id: sensor.front_door_doorbell_battery
+        state: '20'
+      sequence:
+      - action: notify.mobile_app_ant_s_note_20
+        metadata: {}
+        data:
+          message: Battery needs charging soon
+          title: Front Doorbell
+  mode: single
+- id: '1734074494584'
+  alias: Wake up
+  description: ''
+  triggers:
+  - trigger: time
+    at: 06:00:00
+  conditions: []
+  actions:
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.sleep
+  - type: turn_off
+    device_id: 27fbc16063daa1293f585f3b398f59f9
+    entity_id: 4c15071a57e7cbefd147e805810e88cc
+    domain: switch
+  mode: single
+- id: '1734189468166'
+  alias: Doorbell notification when I'm at home
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.front_door_doorbell_visitor
+    to: 'on'
+  conditions:
+  - condition: zone
+    entity_id: person.anthony_barclay
+    zone: zone.home
+  actions:
+  - action: notify.mobile_app_ant_s_note_20
+    metadata: {}
+    data:
+      message: Someone's at the door
+  mode: single
+- id: '1735399709235'
+  alias: Tailscale when away from home wifi
+  description: This automation enables tailscale when away from home wifi and disables
+    it when at home.
+  triggers:
+  - entity_id:
+    - device_tracker.ant_s_note_20
+    to: not_home
+    id: away
+    trigger: state
+  - entity_id:
+    - device_tracker.ant_s_note_20
+    from: not_home
+    to: home
+    id: home
+    trigger: state
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: away
+      sequence:
+      - alias: Ensure App running
+        action: notify.mobile_app_ant_s_note_20
+        data:
+          message: command_launch_app
+          data:
+            package_name: com.tailscale.ipn
+      - data:
+          message: command_broadcast_intent
+          data:
+            intent_package_name: com.tailscale.ipn
+            intent_action: com.tailscale.ipn.CONNECT_VPN
+        alias: Enable VPN
+        action: notify.mobile_app_ant_s_note_20
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 5
+      - data:
+          message: command_broadcast_intent
+          data:
+            intent_package_name: com.tailscale.ipn
+            intent_action: com.tailscale.ipn.CONNECT_VPN
+        alias: Enable VPN
+        action: notify.mobile_app_ant_s_note_20
+    - conditions:
+      - condition: trigger
+        id: home
+      sequence:
+      - data:
+          message: command_broadcast_intent
+          data:
+            intent_package_name: com.tailscale.ipn
+            intent_action: com.tailscale.ipn.DISCONNECT_VPN
+        alias: Disconnect tailscale
+        action: notify.mobile_app_ant_s_note_20
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 5
+          milliseconds: 0
+      - data:
+          message: command_broadcast_intent
+          data:
+            intent_package_name: com.tailscale.ipn
+            intent_action: com.tailscale.ipn.DISCONNECT_VPN
+        alias: Ensure tailscale disconnected
+        action: notify.mobile_app_ant_s_note_20
+  mode: single
+- id: '1735992358087'
+  alias: Office Presence Lighting
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.everything_presence_lite_office_occupancy
+      light_switch:
+        entity_id: light.office_lights
+      time_delay: 0.5
+      include_light_control:
+      - use_transition
+      - use_brightness
+      include_dynamic_lighting: enable_sun_elevation_colour_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.office_lights
+      include_night_light_control:
+      - use_brightness
+      - use_transition
+      - if_lights_are_on_adjust_when_crossing_over
+      night_time_delay: 0.5
+      include_light_colour_control: use_colour_temperature
+      light_colour_temperature: 4000
+      include_night_light_colour_control: use_colour_temperature
+      night_light_colour_temperature: 2500
+      dynamic_lighting_min_brightness: 50
+      dynamic_lighting_max_colour_temp: 4000
+      dynamic_lighting_min_colour_temp: 2500
+      night_light_brightness: 10
+- id: '1735993299497'
+  alias: Hallway Ground Presence Lighting
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.hallway_ground_combined_occupancy
+      light_switch:
+        entity_id: light.hallway_ground_light
+      time_delay: 0.5
+      include_light_control:
+      - use_transition
+      - use_brightness
+      include_dynamic_lighting: enable_sun_elevation_colour_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.hallway_ground_light
+      night_time_delay: 0.5
+      include_night_light_control:
+      - use_brightness
+      - use_transition
+      - if_lights_are_on_adjust_when_crossing_over
+      include_light_colour_control: use_colour_temperature
+      light_colour_temperature: 4000
+      include_night_light_colour_control: use_colour_temperature
+      night_light_colour_temperature: 2500
+      dynamic_lighting_min_brightness: 50
+      dynamic_lighting_max_colour_temp: 4000
+      dynamic_lighting_min_colour_temp: 2500
+      night_light_brightness: 10
+- id: '1735993600547'
+  alias: Bathroom Presence Lighting
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.bathroom_motion_sensor_motion
+      light_switch:
+        entity_id: light.bathroom_light
+      time_delay: 2
+      include_dynamic_lighting: enable_sun_elevation_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.bathroom_light
+      night_time_delay: 2
+      include_night_light_control:
+      - use_brightness
+      - if_lights_are_on_adjust_when_crossing_over
+      - use_transition
+      include_light_control:
+      - use_brightness
+      - use_transition
+      night_lights_conditions:
+      - entity_state_enabled
+      night_light_brightness: 5
+      dynamic_lighting_min_brightness: 40
+- id: '1735993845969'
+  alias: Spare Bedroom Presence Lighting
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.everything_presence_lite_spare_bedroom_occupancy
+      light_switch:
+        entity_id: light.spare_bedroom_light
+      time_delay: 0.5
+      include_light_control:
+      - use_brightness
+      - use_transition
+      include_dynamic_lighting: enable_sun_elevation_colour_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.spare_bedroom_light
+      night_time_delay: 0.5
+      include_night_light_control:
+      - use_brightness
+      - if_lights_are_on_adjust_when_crossing_over
+      - use_transition
+      include_light_colour_control: use_colour_temperature
+      light_colour_temperature: 4000
+      night_light_brightness: 10
+      dynamic_lighting_min_brightness: 50
+      dynamic_lighting_max_colour_temp: 4000
+      dynamic_lighting_min_colour_temp: 2500
+- id: '1735993951174'
+  alias: Kitchen Presence Lighting
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.everything_presence_lite_kitchen_occupancy
+      light_switch:
+        entity_id:
+        - light.kitchen_lights
+      time_delay: 0.5
+      include_light_control:
+      - use_brightness
+      - use_transition
+      include_dynamic_lighting: enable_sun_elevation_colour_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.kitchen_lights
+      night_time_delay: 0.5
+      include_night_light_control:
+      - use_brightness
+      - use_transition
+      - if_lights_are_on_adjust_when_crossing_over
+      include_light_colour_control: use_colour_temperature
+      light_colour_temperature: 4000
+      include_night_light_colour_control: use_colour_temperature
+      night_light_colour_temperature: 2500
+      dynamic_lighting_min_brightness: 50
+      dynamic_lighting_max_colour_temp: 4500
+      dynamic_lighting_min_colour_temp: 2500
+      night_light_brightness: 10
+- id: '1735994046763'
+  alias: Living Room Presence Lights
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.living_room_presence
+      light_switch:
+        entity_id: light.living_room_light
+      time_delay: 0.5
+      include_light_control:
+      - use_brightness
+      - use_transition
+      include_dynamic_lighting: enable_sun_elevation_colour_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.living_room_light
+      night_time_delay: 0.5
+      include_night_light_control:
+      - use_brightness
+      - use_transition
+      - if_lights_are_on_adjust_when_crossing_over
+      include_light_colour_control: use_colour_temperature
+      light_colour_temperature: 4000
+      include_night_light_colour_control: use_colour_temperature
+      night_light_colour_temperature: 2500
+      motion_bypass_lights_stop:
+      - media_player.living_room_avr
+      include_bypass: []
+      dynamic_lighting_min_brightness: 40
+      dynamic_lighting_max_colour_temp: 4000
+      dynamic_lighting_min_colour_temp: 2500
+      night_light_brightness: 10
+      motion_bypass_lights_on:
+      - media_player.living_room_avr
+- id: '1735994731601'
+  alias: Master Bedroom Presence Lighting
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.master_bedroom_occupancy_not_bed
+      light_switch:
+        entity_id: light.master_bedroom_light
+      time_delay: 0.5
+      include_light_control:
+      - use_brightness
+      - use_transition
+      include_dynamic_lighting: enable_sun_elevation_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.master_bedroom_light
+      night_time_delay: 0.5
+      include_night_light_control:
+      - use_brightness
+      - use_transition
+      - if_lights_are_on_adjust_when_crossing_over
+      include_light_colour_control: use_colour_temperature
+      include_night_light_colour_control: use_colour_temperature
+      night_light_brightness: 1
+      dynamic_lighting_min_brightness: 10
+      light_colour_temperature: 4000
+      dynamic_lighting_max_brightness: 65
+      dynamic_lighting_max_colour_temp: 4500
+      dynamic_lighting_min_colour_temp: 2000
+      night_light_colour_temperature: 2500
+- id: '1736001038339'
+  alias: Airing Cupboard Presence Lighting
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.airing_cupboard_motion_detection
+      light_switch:
+        entity_id: light.airing_cupboard_light_light
+      time_delay: 0.5
+      include_light_control:
+      - use_brightness
+      - use_transition
+      include_light_colour_control: use_colour_temperature
+      include_dynamic_lighting: enable_sun_elevation_colour_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.airing_cupboard_light_light
+      include_night_light_control:
+      - use_brightness
+      - use_transition
+      - if_lights_are_on_adjust_when_crossing_over
+      include_night_light_colour_control: use_colour_temperature
+      dynamic_lighting_min_brightness: 50
+      night_light_brightness: 10
+      dynamic_lighting_min_colour_temp: 2500
+      dynamic_lighting_max_colour_temp: 4000
+- id: '1736047653795'
+  alias: Hallway Upper Presence Lighting
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.everything_presence_lite_hallway_upper_occupancy
+      light_switch:
+        entity_id: light.hallway_upper_light
+      time_delay: 0.5
+      include_light_control:
+      - use_transition
+      - use_brightness
+      include_dynamic_lighting: enable_sun_elevation_colour_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.hallway_upper_light
+      night_time_delay: 0.5
+      include_night_light_control:
+      - use_brightness
+      - use_transition
+      - if_lights_are_on_adjust_when_crossing_over
+      include_light_colour_control: use_colour_temperature
+      light_colour_temperature: 4000
+      include_night_light_colour_control: use_colour_temperature
+      night_light_colour_temperature: 2500
+      dynamic_lighting_min_brightness: 50
+      dynamic_lighting_max_colour_temp: 4000
+      dynamic_lighting_min_colour_temp: 2500
+      night_light_brightness: 10
+- id: '1736245452298'
+  alias: Notify if a thermostat is offline
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.thermostat_connectivity
+    to: 'off'
+  conditions: []
+  actions:
+  - action: notify.gotify
+    metadata: {}
+    data:
+      message: At least one thermostat is disconnected
+  mode: single
+- id: '1736532711824'
+  alias: Master Bedroom Dimmer Controller
+  description: ''
+  use_blueprint:
+    path: EPMatt/philips_324131092621.yaml
+    input:
+      integration: ZHA
+      controller_device: 04cda24f0ffa9f157ef6aa0b1cd23de9
+      helper_last_controller_event: input_text.master_bedroom_dimmer_helper
+- id: '1736532812681'
+  alias: Master Bedroom Dimmer Hook
+  description: ''
+  use_blueprint:
+    path: EPMatt/light.yaml
+    input:
+      controller_device: 04cda24f0ffa9f157ef6aa0b1cd23de9
+      controller_model: Philips 324131092621 Hue Dimmer switch
+      light: light.master_bedroom_light
+      light_color_mode: Color Temperature
+      max_brightness: 160
+- id: '1736796501652'
+  alias: Kitchen Presence Lighting - Undercabinet
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.everything_presence_lite_kitchen_occupancy
+      light_switch:
+        entity_id: light.kitchen_undercabinet_lights
+      time_delay: 0.5
+      include_light_control:
+      - use_brightness
+      - use_transition
+      include_dynamic_lighting: enable_sun_elevation_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.kitchen_undercabinet_lights
+      night_time_delay: 0.5
+      include_night_light_control:
+      - use_brightness
+      - use_transition
+      - if_lights_are_on_adjust_when_crossing_over
+      include_light_colour_control: disable_colour_control
+      light_colour_temperature: 4000
+      include_night_light_colour_control: disable_colour_control
+      night_light_colour_temperature: 2500
+      dynamic_lighting_min_brightness: 50
+      dynamic_lighting_max_colour_temp: 4500
+      dynamic_lighting_min_colour_temp: 2500
+      night_light_brightness: 10
+      light_transition_on: 2
+      light_transition_off: 2
+- id: '1751717143455'
+  alias: Volume up for Jellyfin
+  description: ''
+  triggers:
+  - device_id: 7af9e2dc40b610023225b1b22674fc42
+    domain: media_player
+    entity_id: 3e10ca146c46445379bbbd566304a72e
+    type: playing
+    trigger: device
+  conditions: []
+  actions:
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.55
+    target:
+      device_id: 7c7ec4c778fc80c70b2e20f6d916c331
+  mode: single
+- id: '1751717185785'
+  alias: Volume down when Jellyfin stops
+  description: ''
+  triggers:
+  - device_id: 7af9e2dc40b610023225b1b22674fc42
+    domain: media_player
+    entity_id: 3e10ca146c46445379bbbd566304a72e
+    type: idle
+    trigger: device
+  conditions: []
+  actions:
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.45
+    target:
+      device_id: 7c7ec4c778fc80c70b2e20f6d916c331
+  mode: single

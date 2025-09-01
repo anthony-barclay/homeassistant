@@ -1,0 +1,204 @@
+type: vertical-stack
+view_layout:
+  grid-area: sidebar
+cards:
+  - type: custom:stack-in-card
+    mode: vertical
+    cards:
+      - type: conditional
+        conditions:
+          - condition: screen
+            media_query: "(max-width: 767px)"
+        card:
+          type: custom:clock-weather-card
+          entity: weather.forecast_home
+          locale: en-GB
+          date_pattern: ccc, DDD
+          animated_icon: true
+          hide_forecast_section: true
+          use_browser_time: true
+          card_mod:
+            style: |
+              .card-content {
+                padding-top: 0px !important;
+                padding-bottom: 0px !important;
+              }
+      - type: conditional
+        conditions:
+          - condition: screen
+            media_query: "(min-width: 768px)"
+        card:
+          type: custom:clock-weather-card
+          entity: weather.forecast_home
+          locale: en-GB
+          date_pattern: ccc, DDD
+          animated_icon: true
+          hide_forecast_section: true
+          use_browser_time: true
+          card_mod:
+            style: |
+              .card-content {
+                margin-top: -10px !important;
+                padding-top: 0px !important;
+                padding-bottom: 0px !important;
+              }
+      - type: conditional
+        conditions:
+          - condition: screen
+            media_query: "(min-width: 1024px)"
+        card:
+          type: custom:clock-weather-card
+          entity: weather.forecast_home
+          sun_entity: sun.sun
+          forecast_rows: 7
+          locale: en-GB
+          hide_today_section: true
+          card_mod:
+            style: |
+              .card-content {
+                padding-top: 0px !important;
+                padding-bottom: 0px !important;
+              }
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        template: custom_card_andyblac_person
+        entity: person.anthony_barclay
+        variables:
+          ulm_card_person_use_entity_picture: true
+          ulm_address: device_tracker.ant_s_note_20
+          ulm_card_person_eta: sensor.home_ant_s_note_20_distance
+          battery:
+            entity_id: sensor.ant_s_note_20_battery_level
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: sensor.number_of_lights_on
+        icon: mdi:lightbulb-on
+        template:
+          - custom_card_andyblac_count_info
+          - custom_popup_andyblac_tap
+        variables:
+          ulm_custom_card_andyblac_count_info_color_on: yellow
+          popup_title: "Lights"
+          popup_content: !include popups/lights.yaml
+
+      - type: custom:button-card
+        entity: sensor.number_of_sockets_on
+        icon: mdi:power-socket-uk
+        template:
+          - custom_card_andyblac_count_info
+          - custom_popup_andyblac_tap
+        variables:
+          ulm_custom_card_andyblac_count_info_color_on: blue
+          popup_title: "Sockets"
+          popup_content: !include popups/sockets.yaml
+          # hold_action:
+          #   action: navigate
+
+      - type: custom:button-card
+        entity: sensor.number_of_motion_events
+        icon: mdi:motion-sensor
+        template:
+          - custom_card_andyblac_count_info
+          - custom_popup_andyblac_tap
+        variables:
+          ulm_custom_card_andyblac_count_info_color_on: blue
+          popup_title: "Motion"
+          popup_content: !include popups/motion.yaml
+
+      - type: custom:button-card
+        entity: sensor.number_of_low_batteries
+        icon: mdi:battery-alert
+        template:
+          - custom_card_andyblac_count_info
+          - custom_popup_andyblac_tap
+        variables:
+          ulm_custom_card_andyblac_count_info_color_on: blue
+          popup_title: "Low Batteries"
+          popup_content: !include popups/battery.yaml
+
+  - type: custom:stack-in-card
+    mode: horizontal
+    cards:
+      - type: gauge
+        entity: sensor.octopus_energy_electricity_18l2085763_1418728422001_current_demand
+        name: "Electric"
+        min: 0
+        max: 5000
+        needle: false
+        severity:
+          green: 0
+          yellow: 1000
+          red: 1700
+        card_mod:
+          style: |
+            ha-card {
+              padding-left: 0px !important;
+              padding-right: 0px !important;
+            }
+
+      - type: gauge
+        entity: sensor.octopus_energy_electricity_18l2085763_1418728422001_current_accumulative_consumption
+        name: "Electric"
+        min: 0
+        max: 20
+        needle: false
+        severity:
+          green: 0
+          yellow: 12
+          red: 15
+        card_mod:
+          style: |
+            ha-card {
+              padding-left: 0px !important;
+              padding-right: 0px !important;
+            }
+      - type: gauge
+        entity: sensor.octopus_energy_gas_e6s18804871861_4167472603_current_accumulative_consumption_kwh
+        name: "Gas"
+        min: 0
+        max: 80
+        needle: false
+        severity:
+          green: 0
+          yellow: 50
+          red: 70
+        card_mod:
+          style: |
+            ha-card {
+              padding-left: 0px !important;
+              padding-right: 0px !important;
+            }
+
+#  - type: custom:stack-in-card
+#mode: horizontal
+#cards:
+# - type: custom:button-card
+#entity: sensor.server_nic_temp
+#name: "NIC Temp"
+#template:
+#- custom_card_andyblac_status
+
+#- type: custom:button-card
+#entity: sensor.server_nic_fan
+#name: "NIC Fan"
+#template:
+#- custom_card_andyblac_status
+
+#- type: custom:stack-in-card
+#mode: horizontal
+#cards:
+#- type: custom:button-card
+#entity: sensor.server_hdd_temp
+#name: "HDD Temp"
+#template:
+#- custom_card_andyblac_status
+
+#- type: custom:button-card
+#entity: sensor.server_main_fan_mean
+#name: "Main Fans"
+#template:
+#- custom_card_andyblac_status

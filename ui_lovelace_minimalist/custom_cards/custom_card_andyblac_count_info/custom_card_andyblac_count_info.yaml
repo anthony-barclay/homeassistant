@@ -1,0 +1,135 @@
+---
+custom_card_andyblac_count_info:
+  # v1.3.2
+  template:
+    - "ulm_translation_engine"
+  variables:
+    ulm_custom_card_andyblac_count_info_badge_bg: true
+    ulm_custom_card_andyblac_count_info_color_on: "[[[ return entity?.attributes?.color ]]]"
+    tap_action:
+      action: "[[[ return entity?.attributes?.navigation ? 'navigate' : 'more-info'; ]]]"
+      navigation_path: "[[[ return entity?.attributes?.navigation ? entity?.attributes?.navigation : 'none'; ]]]"
+    hold_action:
+      action: "more-info"
+      navigation_path: "[[[ return entity?.attributes?.navigation ? entity?.attributes?.navigation : 'none'; ]]]"
+    ulm_active_state: >
+      [[[
+        let not_active = ['0','disarmed','off','closed','not_home','standby','idle','docked','unknown','unavailable','paused']
+        function containsNumbers(str) {
+          return /\d/.test(str);
+        }
+        if (!not_active.includes(entity.state)) {
+          if (containsNumbers(entity.state)) {
+            return entity?.state;
+          }
+          return entity?.state; 
+        }
+      ]]]
+
+  size: "45%"
+  aspect_ratio: "1/1"
+  show_icon: true
+  show_label: true
+  show_name: false
+  label: "[[[ return variables.ulm_active_state ]]]"
+
+  tap_action:
+    action: "[[[ return variables?.tap_action?.action ? variables.tap_action.action : 'none'; ]]]"
+    navigation_path: "[[[ return variables.tap_action.navigation_path; ]]]"
+    url_path: "[[[ return variables.tap_action.url_path; ]]]"
+    service: "[[[ return variables.tap_action.service; ]]]"
+    service_data: "[[[ return variables.tap_action.service_data; ]]]"
+  hold_action:
+    action: "[[[ return variables?.hold_action?.action ? variables.hold_action.action : 'none'; ]]]"
+    navigation_path: "[[[ return variables.hold_action.navigation_path; ]]]"
+    url_path: "[[[ return variables.hold_action.url_path; ]]]"
+    service: "[[[ return variables.hold_action.service; ]]]"
+    service_data: "[[[ return variables.hold_action.service_data; ]]]"
+
+  state:
+    - value: "unavailable"
+      styles:
+        custom_fields:
+          notification:
+            - border-radius: "50%"
+            - position: "absolute"
+            - right: "6%"
+            - height: "30%"
+            - width: "30%"
+            - line-height: 0
+            - background-color: "var(--accent-color)"
+    - value: "[[[ return variables.ulm_active_state ]]]"
+      styles:
+        label:
+          - color: >
+              [[[
+                if (variables.ulm_custom_card_andyblac_count_info_color_on?.startsWith("rgb")) {
+                  return variables.ulm_custom_card_andyblac_count_info_color_on;
+                } else {
+                  return 'rgba(var(--color-'+variables.ulm_custom_card_andyblac_count_info_color_on+'),1)';
+                }
+              ]]]
+          - background-color: >
+              [[[
+                if (variables.ulm_custom_card_andyblac_count_info_badge_bg) {
+                  if (variables.ulm_custom_card_andyblac_count_info_color_on?.startsWith("rgb")) {
+                    return 'color-mix(in srgb, transparent, '+variables.ulm_custom_card_andyblac_count_info_color_on+' 20%)';
+                  } else {
+                    return variables.ulm_custom_card_andyblac_count_info_color_on ? 'rgba(var(--color-'+variables.ulm_custom_card_andyblac_count_info_color_on+'),0.2)' : 'rgba(var(--color-theme),0.15)';
+                  }
+                } else {
+                  return 'none';
+                }
+              ]]]
+        icon:
+          - color: >
+              [[[
+                if (variables.ulm_custom_card_andyblac_count_info_color_on?.startsWith("rgb")) {
+                  return variables.ulm_custom_card_andyblac_count_info_color_on;
+                } else {
+                  return variables.ulm_custom_card_andyblac_count_info_color_on ? 'rgba(var(--color-'+variables.ulm_custom_card_andyblac_count_info_color_on+'),1)' : 'rgba(var(--color-theme),0.7)';
+                }
+              ]]]
+        img_cell:
+          - background-color: >
+              [[[
+                if (variables.ulm_custom_card_andyblac_count_info_color_on?.startsWith("rgb")) {
+                  return 'color-mix(in srgb, transparent, '+variables.ulm_custom_card_andyblac_count_info_color_on+' 20%)';
+                } else {
+                  return variables.ulm_custom_card_andyblac_count_info_color_on ? 'rgba(var(--color-'+variables.ulm_custom_card_andyblac_count_info_color_on+'),0.2)' : 'rgba(var(--color-theme),0.15)';
+                }
+              ]]]
+      id: "on"
+
+  styles:
+    label:
+      - position: "absolute"
+      - top: "3px"
+      - right: "3px"
+      - height: "20px"
+      - font-weight: "bold"
+      - font-size: "16px"
+      - color: "rgba(var(--color-theme),0.4)"
+      - background-color: "rgba(var(--color-theme),0.05)"
+      - border-radius: "10px"
+      - padding: "0px 6px"
+    icon:
+      - color: "rgba(var(--color-theme),0.2)"
+    img_cell:
+      - position: "absolute"
+      - left: "-18%"
+      - top: "18%"
+      - background-color: "rgba(var(--color-theme),0.05)"
+      - border-radius: "50%"
+    card:
+      - border-radius: "15px"
+      - box-shadow: "var(--box-shadow)"
+      - padding: "5px"
+
+  custom_fields:
+    notification: >
+      [[[
+        if (entity?.state == 'unavailable'){
+          return '<ha-icon icon="mdi:exclamation" style="width: 100%; height: 100%; color: var(--text-accent-color);"></ha-icon>';
+        }
+      ]]]

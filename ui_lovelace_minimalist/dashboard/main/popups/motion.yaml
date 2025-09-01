@@ -1,0 +1,29 @@
+type: custom:auto-entities
+card:
+  type: entities
+  show_header_toggle: false
+  state_color: true
+  card_mod:
+    style:
+      .: |
+        ha-card: {
+          --ha-card-background: none;
+          box-shadow: none;
+        }
+        .card-content {
+          padding-top: 0px !important;
+          padding-bottom: 0px !important;
+        }
+      hui-toggle-entity-row:
+        $: |
+          hui-generic-entity-row {
+            height: 25px;
+          }
+show_empty: false
+filter:
+  template: |
+    {% for entity in states.binary_sensor | selectattr('attributes.device_class', 'in', ['occupancy','motion']) | rejectattr('name','contains','Zone') |rejectattr('name','contains','Inoccupancy') | rejectattr('name','contains','PIR') | rejectattr('name','contains','mmWave') | selectattr('state','eq','on') %}
+      {{ entity.entity_id }}
+    {% endfor %}
+sort:
+  method: friendly_name

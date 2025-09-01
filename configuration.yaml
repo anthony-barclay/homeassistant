@@ -1,0 +1,41 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+notify:
+  - name: "Gotify"
+    platform: gotify
+    url: https://beast.anthome.uk:8843
+    token: Acp._3LDPPWpDPp
+
+group: !include groups.yaml
+automation: !include automations.yaml
+light: !include lights.yaml
+lovelace: !include lovelace.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensors.yaml
+binary_sensor: !include binary_sensors.yaml
+mqtt: !include mqtt.yaml
+switch: !include switches.yaml
+frontend:
+  themes: !include_dir_merge_named themes
+  extra_module_url:
+    - /config/www/community/hass-hue-icons/hass-hue-icons.js
+zha:
+  custom_quirks_path: /config/zha_quirks/
+  zigpy_config:
+    ota:
+      ikea_provider: true
+      ledvance_provider: true
+logger:
+  default: warning
+
+# Required for traefik
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 10.0.0.5

@@ -1,0 +1,9 @@
+substitutions:
+  node_name: x1c_top_light
+  node_description: X1C Top Light
+
+packages:
+  common: !include common/esp32light.yaml
+
+wifi:
+  use_address: x1c_top_light.anthome.uk

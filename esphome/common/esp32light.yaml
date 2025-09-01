@@ -1,0 +1,50 @@
+esphome:
+  name: ${node_name}
+  friendly_name: ${node_description}
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+output:
+  - platform: ledc
+    pin: GPIO4
+    id: whitepin
+  - platform: ledc
+    pin: GPIO5
+    id: bluepin
+  - platform: ledc
+    pin: GPIO6
+    id: greenpin
+  - platform: ledc
+    pin: GPIO7
+    id: redpin
+
+light:
+  - platform: monochromatic
+    output: greenpin
+    name: ${node_description}
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "01lRV17NFqPGK/E9tnmaAxnMbdX+fNmqmMEcvtjkvJ4="
+
+ota:
+  platform: esphome
+  password: "ba1260ffc68d681a5ec1269b780be96d"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "${node_description} Fallback Hotspot"
+    password: "gn6YNBcU1iSC"
+
+captive_portal:

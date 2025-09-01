@@ -1,0 +1,69 @@
+#sensor:
+#- name: "Server Cabinet Temperature"
+#unique_id: "server.temp"
+#state_topic: "/F54B648450/temp"
+#unit_of_measurement: "°C"
+#device_class: temperature
+
+#- name: "Server Cabinet Battery"
+#unique_id: "server.battery"
+#state_topic: "/F54B648450/batt_voltage"
+#unit_of_measurement: "V"
+#device_class: voltage
+
+#- name: "Dining Room Temperature"
+#state_topic: "/FF7B58728F/temp"
+#unique_id: "diningroom.temp"
+#unit_of_measurement: "°C"
+#device_class: temperature
+
+#- name: "Dining Room Battery"
+#state_topic: "/FF7B58728F/batt_voltage"
+#unique_id: "diningroom.battery"
+#unit_of_measurement: "V"
+#device_class: voltage
+
+#- name: "Server NIC Fan"
+#  state_topic: "corsairmonitor/status/Fan_speed_1"
+#  unique_id: "server.nicfan"
+#  unit_of_measurement: "RPM"
+
+#- name: "Server Main Fan 1"
+#  state_topic: "corsairmonitor/status/Fan_speed_2"
+#  unique_id: "server.mainfain1"
+#  unit_of_measurement: "RPM"
+
+#- name: "Server Main Fan 2"
+#  state_topic: "corsairmonitor/status/Fan_speed_3"
+#  unique_id: "server.mainfan2"
+#  unit_of_measurement: "RPM"
+
+#- name: "Server Main Fan 3"
+#  state_topic: "corsairmonitor/status/Fan_speed_4"
+#  unique_id: "server.mainfan3"
+#  unit_of_measurement: "RPM"
+
+#- name: "Server HDD Temp"
+#  state_topic: "corsairmonitor/status/Temperature_0"
+#  unique_id: "server.hddtemp"
+#  unit_of_measurement: "°C"
+#  device_class: temperature
+
+#- name: "Server NIC Temp"
+#  state_topic: "corsairmonitor/status/Temperature_1"
+#  unique_id: "server.nictemp"
+#  unit_of_measurement: "°C"
+#  device_class: temperature
+- binary_sensor:
+    name: "Desktop"
+    unique_id: "desktop.online"
+    state_topic: "usersessionhook/status/desktop"
+    payload_on: "True"
+    payload_off: "False"
+    qos: 0
+    device_class: power
+    value_template: "{{ value_json.online }}"
+
+- number:
+    unique_id: "my_number"
+    command_topic: my-device/threshold

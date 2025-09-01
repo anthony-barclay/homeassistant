@@ -1,0 +1,379 @@
+title: Home
+icon: mdi:home-circle
+path: home
+type: custom:grid-layout
+layout:
+  #default
+  margin: 0
+  grid-gap: var(--custom-layout-card-padding)
+  grid-template-columns: 30.4% repeat(4, 1fr)
+  grid-template-rows: repeat(3, fit-content(100%))
+  grid-template-areas: |
+    "sidebar  room1   room2   room3   room4  "
+    "sidebar  room5   room6   room7   room8  "
+    "sidebar  room9   room10  room11  room12 "
+    "sidebar  .       .       .       .      "
+    "sidebar  .       .       .       .      "
+  mediaquery:
+    #phone
+    "(max-width: 767px)":
+      grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
+      grid-template-columns: repeat(2, 1fr)
+      grid-template-rows: repeat(7, fit-content(100%))
+      grid-template-areas: |
+        "sidebar  sidebar "
+        "room1    room2   "
+        "room3    room4   "
+        "room5    room6   "
+        "room7    room8   "
+        "room9    room10  "
+        "room11   room12  "
+    #Tablet
+    "(max-width: 1024px)":
+      margin: 0
+      grid-gap: var(--custom-layout-card-padding)
+      grid-template-columns: 40% repeat(3, 1fr)
+      grid-template-rows: repeat(4, fit-content(80%))
+      grid-template-areas: |
+        "sidebar  room1   room2   room3  "
+        "sidebar  room4   room5   room6  "
+        "sidebar  room7   room8   room9  "
+        "sidebar  room10  room11  room12 "
+        "sidebar  .       .       .      "
+cards:
+  # Sidebar
+  - !include sidebar.yaml
+
+  # Airing Cupboard
+  - type: custom:button-card
+    view_layout:
+      grid-area: room1
+    template:
+      - custom_card_andyblac_room
+    name: Airing Cupboard
+    icon: mdi:flower
+    tap_action:
+      action: navigate
+      navigation_path: airing_cupboard
+    variables:
+      ulm_custom_card_andyblac_room_color: green
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      sensor_label_1: sensor.airing_cupboard_temperature
+      sensor_label_2: sensor.airing_cupboard_humidity
+      sensor_label_3: sensor.airing_cupboard_illuminance
+
+      sensor_1:
+        entity_id: binary_sensor.airing_cupboard_motion_detection
+        templates:
+          - motion_animation
+
+      # Has to be entity 3 to push it down
+      entity_3:
+        entity_id: light.airing_cupboard_light_light
+        ulm_custom_card_andyblac_room_use_light_color: false
+
+  # Bathroom
+  - type: custom:button-card
+    view_layout:
+      grid-area: room2
+    template:
+      - custom_card_andyblac_room
+    name: Bathroom
+    icon: mdi:shower
+    tap_action:
+      action: navigate
+      navigation_path: bathroom
+    variables:
+      ulm_custom_card_andyblac_room_color: blue
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      sensor_label_1: sensor.bathroom_temperature
+      sensor_label_2: sensor.bathroom_humidity
+
+      sensor_1:
+        entity_id: binary_sensor.bathroom_motion_sensor_motion
+        templates:
+          - motion_animation
+
+      entity_3:
+        entity_id: light.bathroom_light
+        ulm_custom_card_andyblac_room_use_light_color: false
+
+  # Conservatory
+  - type: custom:button-card
+    view_layout:
+      grid-area: room3
+    template:
+      - custom_card_andyblac_room
+    name: Conservatory
+    icon: mdi:window-closed
+    tap_action:
+      action: navigate
+      navigation_path: conservatory
+    variables:
+      ulm_custom_card_andyblac_room_color: green
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      #sensor_label_1: sensor.conservatory_temperature
+      #sensor_label_2: sensor.conservatory_humidity
+      sensor_label_3: sensor.everything_presence_lite_conservatory_illuminance
+
+      sensor_1:
+        entity_id: binary_sensor.everything_presence_lite_conservatory_occupancy
+        templates:
+          - motion_animation
+
+  # Garage
+  - type: custom:button-card
+    view_layout:
+      grid-area: room4
+    template:
+      - custom_card_andyblac_room
+    name: Garage
+    icon: mdi:garage
+    tap_action:
+      action: navigate
+      navigation_path: garage
+    variables:
+      ulm_custom_card_andyblac_room_color: red
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      sensor_label_1: sensor.everything_presence_one_garage_temperature
+      sensor_label_2: sensor.everything_presence_one_garage_humidity
+      sensor_label_3: sensor.everything_presence_one_garage_illuminance
+
+      sensor_1:
+        entity_id: binary_sensor.everything_presence_one_garage_occupancy
+        templates:
+          - motion_animation
+
+      #entity_3:
+      #entity_id: switch.cluster_outlet
+      #icon: mdi:server-network
+
+  # Hallway
+  - type: custom:button-card
+    view_layout:
+      grid-area: room5
+    template:
+      - custom_card_andyblac_room
+    name: Hallway
+    icon: mdi:stairs
+    tap_action:
+      action: navigate
+      navigation_path: hallway
+    variables:
+      ulm_custom_card_andyblac_room_color: blue
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      #sensor_label_1: sensor.hallway_temperature
+      #sensor_label_2: sensor.hallway_humidity
+      sensor_label_3: sensor.everything_presence_lite_hallway_ground_illuminance
+      sensor_label_4: sensor.everything_presence_lite_hallway_upper_illuminance
+
+      sensor_1:
+        entity_id: binary_sensor.hallway_ground_combined_occupancy
+        templates:
+          - motion_animation
+      sensor_2:
+        entity_id: binary_sensor.everything_presence_lite_hallway_upper_occupancy
+        templates:
+          - motion_animation
+
+      entity_3:
+        entity_id: light.hallway_lights
+        ulm_custom_card_andyblac_room_use_light_color: false
+
+      #custom_2:
+      #entity_id: climate.hallway
+
+  # Kitchen
+  - type: custom:button-card
+    view_layout:
+      grid-area: room6
+    template:
+      - custom_card_andyblac_room
+    name: Kitchen
+    icon: mdi:silverware-fork-knife
+    tap_action:
+      action: navigate
+      navigation_path: kitchen
+    variables:
+      ulm_custom_card_andyblac_room_color: blue
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      #sensor_label_1: sensor.kitchen_temperature
+      #sensor_label_2: sensor.kitchen_humidity
+      sensor_label_3: sensor.everything_presence_lite_kitchen_illuminance
+
+      sensor_1:
+        entity_id: binary_sensor.everything_presence_lite_kitchen_occupancy
+        templates:
+          - motion_animation
+
+      entity_3:
+        entity_id: light.kitchen_lights
+        ulm_custom_card_andyblac_room_use_light_color: false
+      entity_4:
+        entity_id: light.kitchen_undercabinet_lights
+        ulm_custom_card_andyblac_room_use_light_color: false
+        icon: mdi:led-strip
+
+      #custom_2:
+      #entity_id: climate.kitchen
+
+  # Living Room
+  - type: custom:button-card
+    view_layout:
+      grid-area: room7
+    template:
+      - custom_card_andyblac_room
+    name: Living Room
+    icon: mdi:sofa
+    tap_action:
+      action: navigate
+      navigation_path: living_room
+    variables:
+      ulm_custom_card_andyblac_room_color: blue
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      #sensor_label_1: sensor.living_room_temperature
+      #sensor_label_2: sensor.living_room_humidity
+      sensor_label_3: sensor.everything_presence_one_living_room_illuminance
+
+      sensor_1:
+        entity_id: binary_sensor.everything_presence_one_living_room_occupancy
+        templates:
+          - motion_animation
+
+      entity_3:
+        entity_id: light.living_room_light
+        ulm_custom_card_andyblac_room_use_light_color: false
+
+      #custom_2:
+      #entity_id: climate.living_room
+
+  # Master Bedroom
+  - type: custom:button-card
+    view_layout:
+      grid-area: room8
+    template:
+      - custom_card_andyblac_room
+    name: Master Bedroom
+    icon: mdi:bed-king
+    tap_action:
+      action: navigate
+      navigation_path: master_bedroom
+    variables:
+      ulm_custom_card_andyblac_room_color: yellow
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      #sensor_label_1: sensor.master_bedroom_temperature_2
+      #sensor_label_2: sensor.master_bedroom_humidity_2
+      sensor_label_3: sensor.everything_presence_lite_master_bedroom_illuminance
+
+      sensor_1:
+        entity_id: binary_sensor.everything_presence_lite_master_bedroom_occupancy
+        templates:
+          - motion_animation
+
+      entity_2:
+        entity_id: light.master_bedroom_light
+        ulm_custom_card_andyblac_room_use_light_color: false
+      entity_3:
+        entity_id: light.master_bedroom_bedside_light
+        ulm_custom_card_andyblac_room_use_light_color: false
+        icon: mdi:desk-lamp
+      entity_4:
+        entity_id: switch.electric_blanket
+        icon: mdi:radiator
+
+      #custom_2:
+      #entity_id: climate.master_bedroom_2
+
+  # Office
+  - type: custom:button-card
+    view_layout:
+      grid-area: room9
+    template:
+      - custom_card_andyblac_room
+    name: Office
+    icon: mdi:chair-rolling
+    tap_action:
+      action: navigate
+      navigation_path: office
+    variables:
+      ulm_custom_card_andyblac_room_color: red
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      #sensor_label_1: sensor.office_temperature
+      #sensor_label_2: sensor.office_humidity
+      sensor_label_3: sensor.everything_presence_lite_office_illuminance
+
+      sensor_1:
+        entity_id: binary_sensor.everything_presence_lite_office_occupancy
+        templates:
+          - motion_animation
+
+      entity_3:
+        entity_id: light.office_lights
+        ulm_custom_card_andyblac_room_use_light_color: false
+      entity_4:
+        entity_id: light.painting_light
+        ulm_custom_card_andyblac_room_use_light_color: false
+        icon: mdi:led-strip
+
+      #custom_2:
+      #entity_id: climate.office
+
+  # Spare Bedroom
+  - type: custom:button-card
+    view_layout:
+      grid-area: room10
+    template:
+      - custom_card_andyblac_room
+    name: Spare Bedroom
+    icon: mdi:bed-double
+    tap_action:
+      action: navigate
+      navigation_path: spare_bedroom
+    variables:
+      ulm_custom_card_andyblac_room_color: yellow
+      ulm_custom_card_andyblac_room_use_small_label_font: true
+
+      #sensor_label_1: sensor.spare_bedroom_temperature
+      #sensor_label_2: sensor.spare_bedroom_humidity
+      sensor_label_3: sensor.everything_presence_lite_spare_bedroom_illuminance
+
+      sensor_1:
+        entity_id: binary_sensor.everything_presence_lite_spare_bedroom_occupancy
+        templates:
+          - motion_animation
+
+      entity_3:
+        entity_id: light.spare_bedroom_light
+        ulm_custom_card_andyblac_room_use_light_color: false
+
+      #custom_2:
+      #entity_id: climate.spare_bedroom
+
+  # Server
+  #- type: custom:button-card
+  #  view_layout:
+  #    grid-area: room11
+  #  template:
+  #    - custom_card_andyblac_room
+  #  name: Server
+  #  icon: mdi:server
+  #  tap_action:
+  #    action: navigate
+  #    navigation_path: server
+  #  variables:
+  #    ulm_custom_card_andyblac_room_color: red
+  #    ulm_custom_card_andyblac_room_use_small_label_font: true
+#
+#      sensor_label_1: sensor.server_nic_temp
+#      sensor_label_2: sensor.server_hdd_temp
+#      #sensor_label_3: sensor.server_nic_fan
+#      #sensor_label_4: sensor.server_main_fan_mean

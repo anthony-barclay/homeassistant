@@ -1,0 +1,36 @@
+type: custom:auto-entities
+card:
+  type: entities
+  show_header_toggle: false
+  state_color: true
+  card_mod:
+    style:
+      .: |
+        ha-card: {
+          --ha-card-background: none;
+          box-shadow: none;
+        }
+        .card-content {
+          padding-top: 0px !important;
+          padding-bottom: 0px !important;
+        }
+      hui-toggle-entity-row:
+        $: |
+          hui-generic-entity-row {
+            height: 25px;
+          }
+show_empty: false
+filter:
+  template: |
+    {%- set ns = namespace(sensors=[]) -%}
+    {%- set handheld_entities = ['sensor.ant_s_note_20_battery_level','sensor.ant_s_tablet_battery_level'] -%}
+    {%- set ignore_entities = handheld_entities -%}
+    {%- set battery_level = 20 -%}
+    {%- for state in states | selectattr('attributes.device_class', 'eq', 'battery') | rejectattr('entity_id', 'in', ignore_entities) -%}
+      {%- if 0 <= state.state | int(-1) <= battery_level | int -%}
+        {%- set ns.sensors = ns.sensors + [dict(entity_id = state.entity_id, name = state.name | replace(' battery', '') | replace(' Battery', ''), state = state.state | int)] -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {% for entity in ns.sensors %}
+      {{ entity.entity_id }}
+    {% endfor %}

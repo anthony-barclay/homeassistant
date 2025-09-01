@@ -1,0 +1,31 @@
+esphome:
+  name: x1c-toplight
+  friendly_name: X1C-TopLight
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "8WC5YWOrXN3Rd6KR4T8DOZHNJQ8TmZtXOL+Lx+UUEjw="
+
+ota:
+  password: "87df038bc0ed18aa384a871af302d3e0"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "X1C-Toplight Fallback Hotspot"
+    password: "ziR1C71pg5tW"
+
+captive_portal:
+    

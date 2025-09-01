@@ -1,0 +1,32 @@
+esphome:
+  name: bluetooth-proxy-master-bedroom
+  friendly_name: Bluetooth Proxy Master Bedroom
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "swgpNtmYWHnhVbVLJqIoXK+arq5qQKW43yIb0rx69bc="
+
+ota:
+  - platform: esphome
+    password: "5c0976303764f912982c12f3b74fd57c"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Bluetooth-Proxy-Master-Bedroom"
+    password: "4RgUWG2kZc86"
+
+captive_portal:
+    

@@ -1,0 +1,9 @@
+substitutions:
+  node_name: painting-light
+  node_description: Painting Light
+
+packages:
+  common: !include common/esp32light.yaml
+
+wifi:
+  use_address: painting-light.anthome.uk
