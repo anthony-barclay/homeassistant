@@ -1,0 +1,54 @@
+esphome:
+  name: officeenvcontrol
+  friendly_name: OfficeEnvControl
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "hsvJ9N0rNrSy4F3SsSmKKQ6pnwz4TpYOa+Cv1CFvJY8="
+
+ota:
+  - platform: esphome
+    password: "ed6bb2ba00725b66a104030272ef42f3"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: officeenvcontrol.anthome.uk
+
+esp32_ble_tracker:
+  scan_parameters:
+    active: true
+
+bluetooth_proxy:
+  active: true
+
+output:
+  - platform: ledc
+    pin: GPIO13
+    frequency: 25000 Hz
+    id: fan_pwm
+
+switch:
+  - platform: gpio
+    pin: GPIO14
+    internal: true
+    id: fan_relay
+
+fan:
+  - platform: speed
+    output: fan_pwm
+    name: "Exhaust Fan"
+    on_turn_on:
+      - switch.turn_on: fan_relay
+    
+    on_turn_off:
+      - switch.turn_off: fan_relay

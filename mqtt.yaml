@@ -63,7 +63,3 @@
     qos: 0
     device_class: power
     value_template: "{{ value_json.online }}"
-
-- number:
-    unique_id: "my_number"
-    command_topic: my-device/threshold

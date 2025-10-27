@@ -1,0 +1,54 @@
+esphome:
+  name: officefancontrol
+  friendly_name: OfficeFanControl
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "XKUZAzOG0H2W6Q1DF1xyEiyTIdGsIMM/VNPhrcJGlWU="
+
+ota:
+  - platform: esphome
+    password: "7fd6bb5a248a68441d04fd5bb5690073"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: officefancontrol.anthome.uk
+
+esp32_ble_tracker:
+  scan_parameters:
+    active: true
+
+bluetooth_proxy:
+  active: true
+
+output:
+  - platform: ledc
+    pin: GPIO2
+    frequency: 25000 Hz
+    id: fan_pwm
+
+switch:
+  - platform: gpio
+    pin: GPIO3
+    internal: true
+    id: fan_relay
+
+fan:
+  - platform: speed
+    output: fan_pwm
+    name: "Exhaust Fan"
+    on_turn_on:
+      - switch.turn_on: fan_relay
+    
+    on_turn_off:
+      - switch.turn_off: fan_relay

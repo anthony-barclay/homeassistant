@@ -336,24 +336,6 @@
         target:
           entity_id: light.x1c_top_light
   mode: single
-- id: '1732963518627'
-  alias: Kitchen Undercabinet Controller
-  description: ''
-  use_blueprint:
-    path: EPMatt/philips_324131092621.yaml
-    input:
-      integration: ZHA
-      controller_device: 9277ce9e2c5a2251d4f24be3d26ce69b
-      helper_last_controller_event: input_text.kitchen_undercabinet_dimmer_helper
-- id: '1732963583464'
-  alias: Kitchen Undercabinet Dimmer Hook
-  description: ''
-  use_blueprint:
-    path: EPMatt/light.yaml
-    input:
-      controller_device: 9277ce9e2c5a2251d4f24be3d26ce69b
-      controller_model: Philips 324131092621 Hue Dimmer switch
-      light: light.kitchen_undercabinet_lights
 - id: '1733313808209'
   alias: Control Office AVR from Desktop
   description: ''
@@ -430,8 +412,8 @@
     target:
       entity_id: input_boolean.sleep
   - type: turn_off
-    device_id: 27fbc16063daa1293f585f3b398f59f9
-    entity_id: 4c15071a57e7cbefd147e805810e88cc
+    device_id: 13cc7f5bf24d1129523ccc2a43bb615d
+    entity_id: 2d9cfab0d2828b0674110720fd6a68f2
     domain: switch
   mode: single
 - id: '1734189468166'
@@ -558,6 +540,10 @@
       dynamic_lighting_max_colour_temp: 4000
       dynamic_lighting_min_colour_temp: 2500
       night_light_brightness: 10
+      include_ambient: ambient_enabled
+      ambient_light_sensor: sensor.everything_presence_lite_office_illuminance
+      ambient_light_options: ambient_light_option_enabled
+      ambient_light_high_value: 90
 - id: '1735993299497'
   alias: Hallway Ground Presence Lighting
   description: ''
@@ -565,7 +551,7 @@
     path: Blackshome/sensor-light.yaml
     input:
       motion_trigger:
-      - binary_sensor.hallway_ground_combined_occupancy
+      - binary_sensor.everything_presence_lite_hallway_ground_occupancy
       light_switch:
         entity_id: light.hallway_ground_light
       time_delay: 0.5
@@ -593,6 +579,10 @@
       dynamic_lighting_max_colour_temp: 4000
       dynamic_lighting_min_colour_temp: 2500
       night_light_brightness: 10
+      include_ambient: ambient_enabled
+      ambient_light_sensor: sensor.everything_presence_lite_hallway_ground_illuminance
+      ambient_light_options: ambient_light_option_enabled
+      ambient_light_value: 10
 - id: '1735993600547'
   alias: Bathroom Presence Lighting
   description: ''
@@ -655,6 +645,9 @@
       dynamic_lighting_min_brightness: 50
       dynamic_lighting_max_colour_temp: 4000
       dynamic_lighting_min_colour_temp: 2500
+      include_ambient: ambient_enabled
+      ambient_light_sensor: sensor.everything_presence_lite_spare_bedroom_illuminance
+      ambient_light_options: ambient_light_option_enabled
 - id: '1735993951174'
   alias: Kitchen Presence Lighting
   description: ''
@@ -691,6 +684,9 @@
       dynamic_lighting_max_colour_temp: 4500
       dynamic_lighting_min_colour_temp: 2500
       night_light_brightness: 10
+      include_ambient: ambient_enabled
+      ambient_light_sensor: sensor.everything_presence_lite_kitchen_illuminance
+      ambient_light_options: ambient_light_option_enabled
 - id: '1735994046763'
   alias: Living Room Presence Lights
   description: ''
@@ -767,6 +763,9 @@
       dynamic_lighting_max_colour_temp: 4500
       dynamic_lighting_min_colour_temp: 2000
       night_light_colour_temperature: 2500
+      include_ambient: ambient_enabled
+      ambient_light_sensor: sensor.everything_presence_lite_master_bedroom_illuminance
+      ambient_light_options: ambient_light_option_enabled
 - id: '1736001038339'
   alias: Airing Cupboard Presence Lighting
   description: ''
@@ -906,6 +905,9 @@
       night_light_brightness: 10
       light_transition_on: 2
       light_transition_off: 2
+      include_ambient: ambient_enabled
+      ambient_light_sensor: sensor.everything_presence_lite_kitchen_illuminance
+      ambient_light_options: ambient_light_option_enabled
 - id: '1751717143455'
   alias: Volume up for Jellyfin
   description: ''
@@ -941,4 +943,84 @@
       volume_level: 0.45
     target:
       device_id: 7c7ec4c778fc80c70b2e20f6d916c331
+  mode: single
+- id: '1757671277124'
+  alias: Set Default Theme
+  description: ''
+  triggers:
+  - event: start
+    trigger: homeassistant
+  actions:
+  - data:
+      name: minimalist-desktop-andy
+    action: frontend.set_theme
+- id: '1761294066972'
+  alias: Conversatory Presence Lighting
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.everything_presence_lite_conservatory_occupancy
+      light_switch:
+        entity_id: light.conservatory_main_light
+      time_delay: 0.5
+      include_light_control:
+      - use_transition
+      - use_brightness
+      include_dynamic_lighting: enable_sun_elevation_colour_brightness
+      include_night_lights: night_lights_enabled
+      night_lights_conditions:
+      - entity_state_enabled
+      night_lights_entity_state:
+      - input_boolean.sleep
+      night_lights:
+        entity_id: light.conservatory_main_light
+      night_time_delay: 0.5
+      include_night_light_control:
+      - use_brightness
+      - use_transition
+      - if_lights_are_on_adjust_when_crossing_over
+      include_light_colour_control: use_colour_temperature
+      light_colour_temperature: 4000
+      include_night_light_colour_control: use_colour_temperature
+      night_light_colour_temperature: 2500
+      dynamic_lighting_min_brightness: 50
+      dynamic_lighting_max_colour_temp: 4000
+      dynamic_lighting_min_colour_temp: 2500
+      night_light_brightness: 10
+      include_ambient: ambient_enabled
+      ambient_light_sensor: sensor.everything_presence_lite_conservatory_illuminance
+      ambient_light_options: ambient_light_option_enabled
+- id: '1761556338843'
+  alias: Office Fan Control - Dimmer - On
+  description: ''
+  triggers:
+  - device_id: 9277ce9e2c5a2251d4f24be3d26ce69b
+    domain: zha
+    type: remote_button_short_press
+    subtype: turn_on
+    trigger: device
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: edb41403ff483e6cfe86dca358e3cb61
+    entity_id: 50bfaec0af8944eacb20e4dfe8100ad8
+    domain: fan
+  mode: single
+- id: '1761556408557'
+  alias: Office Fan Control - Dimmer - Off
+  description: ''
+  triggers:
+  - device_id: 9277ce9e2c5a2251d4f24be3d26ce69b
+    domain: zha
+    type: remote_button_short_press
+    subtype: turn_off
+    trigger: device
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: edb41403ff483e6cfe86dca358e3cb61
+    entity_id: 50bfaec0af8944eacb20e4dfe8100ad8
+    domain: fan
   mode: single

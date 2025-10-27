@@ -115,14 +115,21 @@ cards:
       ulm_custom_card_andyblac_room_color: green
       ulm_custom_card_andyblac_room_use_small_label_font: true
 
-      #sensor_label_1: sensor.conservatory_temperature
-      #sensor_label_2: sensor.conservatory_humidity
+      sensor_label_1: sensor.conservatory_temperature
+      sensor_label_2: sensor.conservatory_humidity
       sensor_label_3: sensor.everything_presence_lite_conservatory_illuminance
 
       sensor_1:
         entity_id: binary_sensor.everything_presence_lite_conservatory_occupancy
         templates:
           - motion_animation
+
+      entity_2:
+        entity_id: light.conservatory_main_light
+        ulm_custom_card_andyblac_room_use_light_color: false
+      entity_3:
+        entity_id: light.conservatory_secondary_light
+        ulm_custom_card_andyblac_room_use_light_color: false
 
   # Garage
   - type: custom:button-card
@@ -167,13 +174,13 @@ cards:
       ulm_custom_card_andyblac_room_color: blue
       ulm_custom_card_andyblac_room_use_small_label_font: true
 
-      #sensor_label_1: sensor.hallway_temperature
-      #sensor_label_2: sensor.hallway_humidity
+      sensor_label_1: sensor.hallway_temperature
+      sensor_label_2: sensor.hallway_humidity
       sensor_label_3: sensor.everything_presence_lite_hallway_ground_illuminance
       sensor_label_4: sensor.everything_presence_lite_hallway_upper_illuminance
 
       sensor_1:
-        entity_id: binary_sensor.hallway_ground_combined_occupancy
+        entity_id: binary_sensor.everything_presence_lite_hallway_ground_occupancy
         templates:
           - motion_animation
       sensor_2:
@@ -185,8 +192,8 @@ cards:
         entity_id: light.hallway_lights
         ulm_custom_card_andyblac_room_use_light_color: false
 
-      #custom_2:
-      #entity_id: climate.hallway
+      custom_2:
+      entity_id: climate.hallway
 
   # Kitchen
   - type: custom:button-card
@@ -203,8 +210,8 @@ cards:
       ulm_custom_card_andyblac_room_color: blue
       ulm_custom_card_andyblac_room_use_small_label_font: true
 
-      #sensor_label_1: sensor.kitchen_temperature
-      #sensor_label_2: sensor.kitchen_humidity
+      sensor_label_1: sensor.kitchen_temperature
+      sensor_label_2: sensor.kitchen_humidity
       sensor_label_3: sensor.everything_presence_lite_kitchen_illuminance
 
       sensor_1:
@@ -220,8 +227,8 @@ cards:
         ulm_custom_card_andyblac_room_use_light_color: false
         icon: mdi:led-strip
 
-      #custom_2:
-      #entity_id: climate.kitchen
+      custom_2:
+      entity_id: climate.kitchen
 
   # Living Room
   - type: custom:button-card
@@ -238,8 +245,8 @@ cards:
       ulm_custom_card_andyblac_room_color: blue
       ulm_custom_card_andyblac_room_use_small_label_font: true
 
-      #sensor_label_1: sensor.living_room_temperature
-      #sensor_label_2: sensor.living_room_humidity
+      sensor_label_1: sensor.living_room_temperature
+      sensor_label_2: sensor.living_room_humidity
       sensor_label_3: sensor.everything_presence_one_living_room_illuminance
 
       sensor_1:
@@ -251,8 +258,8 @@ cards:
         entity_id: light.living_room_light
         ulm_custom_card_andyblac_room_use_light_color: false
 
-      #custom_2:
-      #entity_id: climate.living_room
+      custom_2:
+      entity_id: climate.living_room
 
   # Master Bedroom
   - type: custom:button-card
@@ -269,8 +276,8 @@ cards:
       ulm_custom_card_andyblac_room_color: yellow
       ulm_custom_card_andyblac_room_use_small_label_font: true
 
-      #sensor_label_1: sensor.master_bedroom_temperature_2
-      #sensor_label_2: sensor.master_bedroom_humidity_2
+      sensor_label_1: sensor.master_bedroom_temperature
+      sensor_label_2: sensor.master_bedroom_humidity
       sensor_label_3: sensor.everything_presence_lite_master_bedroom_illuminance
 
       sensor_1:
@@ -286,11 +293,11 @@ cards:
         ulm_custom_card_andyblac_room_use_light_color: false
         icon: mdi:desk-lamp
       entity_4:
-        entity_id: switch.electric_blanket
+        entity_id: switch.mss315_electric_blanket
         icon: mdi:radiator
 
-      #custom_2:
-      #entity_id: climate.master_bedroom_2
+      custom_2:
+      entity_id: climate.master_bedroom
 
   # Office
   - type: custom:button-card
@@ -307,8 +314,8 @@ cards:
       ulm_custom_card_andyblac_room_color: red
       ulm_custom_card_andyblac_room_use_small_label_font: true
 
-      #sensor_label_1: sensor.office_temperature
-      #sensor_label_2: sensor.office_humidity
+      sensor_label_1: sensor.office_temperature
+      sensor_label_2: sensor.office_humidity
       sensor_label_3: sensor.everything_presence_lite_office_illuminance
 
       sensor_1:
@@ -324,8 +331,8 @@ cards:
         ulm_custom_card_andyblac_room_use_light_color: false
         icon: mdi:led-strip
 
-      #custom_2:
-      #entity_id: climate.office
+      custom_2:
+      entity_id: climate.office
 
   # Spare Bedroom
   - type: custom:button-card
@@ -342,8 +349,8 @@ cards:
       ulm_custom_card_andyblac_room_color: yellow
       ulm_custom_card_andyblac_room_use_small_label_font: true
 
-      #sensor_label_1: sensor.spare_bedroom_temperature
-      #sensor_label_2: sensor.spare_bedroom_humidity
+      sensor_label_1: sensor.spare_bedroom_temperature
+      sensor_label_2: sensor.spare_bedroom_humidity
       sensor_label_3: sensor.everything_presence_lite_spare_bedroom_illuminance
 
       sensor_1:
@@ -355,8 +362,8 @@ cards:
         entity_id: light.spare_bedroom_light
         ulm_custom_card_andyblac_room_use_light_color: false
 
-      #custom_2:
-      #entity_id: climate.spare_bedroom
+      custom_2:
+      entity_id: climate.spare_bedroom
 
   # Server
   #- type: custom:button-card

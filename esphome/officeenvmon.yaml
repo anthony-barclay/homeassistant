@@ -1,0 +1,67 @@
+esphome:
+  name: officeenvmon
+  friendly_name: OfficeEnvMon
+
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "GD/9vMm4qGyXFM1NZYyjj46jKJHJXvwbACqBuS4ouyA="
+
+ota:
+  - platform: esphome
+    password: "79ed99d7c9a273bec6ff81652b0d02b6"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: officeenvmon.anthome.uk
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Officeenvmon Fallback Hotspot"
+    password: "RZXH4lg3fNEg"
+
+esp32_ble_tracker:
+  scan_parameters:
+    active: true
+
+bluetooth_proxy:
+  active: true
+
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+  scan: true
+  id: bus_a
+
+bme68x_bsec2_i2c:
+  i2c_id: bus_a
+  address: 0x77
+  model: bme680
+  operating_age: 28d
+  sample_rate: LP
+  supply_voltage: 3.3V
+
+sensor:
+  - platform: bme68x_bsec2
+    temperature:
+      name: "BME68x Temperature"
+    pressure:
+      name: "BME68x Pressure"
+    humidity:
+      name: "BME68x Humidity"
+    iaq:
+      name: "BME68x IAQ"
+      id: iaq
+    co2_equivalent:
+      name: "BME68x CO2 Equivalent"
+    breath_voc_equivalent:
+      name: "BME68x Breath VOC Equivalent"
