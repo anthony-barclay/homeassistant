@@ -67,11 +67,12 @@
       button_1_lights:
       - light.living_room_light
       button_2_lights:
-      - light.living_room_light
+      - light.living_room_ring_light
       button_3_lights:
-      - light.living_room_ring_light
+      - light.conservatory_christmas_lights
       button_4_lights:
-      - light.living_room_ring_light
+      - light.tree_lights
+      brightness: 50
 - id: '1725719327679'
   alias: Goodnight
   description: Start my night-time routine
@@ -590,7 +591,7 @@
     path: Blackshome/sensor-light.yaml
     input:
       motion_trigger:
-      - binary_sensor.bathroom_motion_sensor_motion
+      - binary_sensor.everything_presence_lite_6759ec_occupancy
       light_switch:
         entity_id: light.bathroom_light
       time_delay: 2
@@ -612,6 +613,8 @@
       - entity_state_enabled
       night_light_brightness: 5
       dynamic_lighting_min_brightness: 40
+      include_ambient: ambient_enabled
+      ambient_light_options: ambient_light_option_enabled
 - id: '1735993845969'
   alias: Spare Bedroom Presence Lighting
   description: ''
@@ -724,7 +727,7 @@
       dynamic_lighting_min_brightness: 40
       dynamic_lighting_max_colour_temp: 4000
       dynamic_lighting_min_colour_temp: 2500
-      night_light_brightness: 10
+      night_light_brightness: 20
       motion_bypass_lights_on:
       - media_player.living_room_avr
 - id: '1735994731601'
@@ -983,12 +986,12 @@
       - if_lights_are_on_adjust_when_crossing_over
       include_light_colour_control: use_colour_temperature
       light_colour_temperature: 4000
-      include_night_light_colour_control: use_colour_temperature
+      include_night_light_colour_control: disable_colour_control
       night_light_colour_temperature: 2500
       dynamic_lighting_min_brightness: 50
       dynamic_lighting_max_colour_temp: 4000
       dynamic_lighting_min_colour_temp: 2500
-      night_light_brightness: 10
+      night_light_brightness: 40
       include_ambient: ambient_enabled
       ambient_light_sensor: sensor.everything_presence_lite_conservatory_illuminance
       ambient_light_options: ambient_light_option_enabled
@@ -1023,4 +1026,112 @@
     device_id: edb41403ff483e6cfe86dca358e3cb61
     entity_id: 50bfaec0af8944eacb20e4dfe8100ad8
     domain: fan
+  mode: single
+- id: '1762869859028'
+  alias: Office Fan Speed Down
+  description: ''
+  triggers:
+  - device_id: 9277ce9e2c5a2251d4f24be3d26ce69b
+    domain: zha
+    type: remote_button_short_press
+    subtype: dim_down
+    trigger: device
+  conditions: []
+  actions:
+  - action: fan.decrease_speed
+    metadata: {}
+    data:
+      percentage_step: 5
+    target:
+      entity_id: fan.officefancontrol_exhaust_fan
+  mode: single
+- id: '1762869904312'
+  alias: Office Fan Speed Up
+  description: ''
+  triggers:
+  - device_id: 9277ce9e2c5a2251d4f24be3d26ce69b
+    domain: zha
+    type: remote_button_short_press
+    subtype: dim_up
+    trigger: device
+  conditions: []
+  actions:
+  - action: fan.increase_speed
+    metadata: {}
+    data:
+      percentage_step: 5
+    target:
+      entity_id: fan.officefancontrol_exhaust_fan
+  mode: single
+- id: '1762870044985'
+  alias: Office Fan Speed Down (Double Click)
+  description: ''
+  triggers:
+  - device_id: 9277ce9e2c5a2251d4f24be3d26ce69b
+    domain: zha
+    type: remote_button_double_press
+    subtype: dim_down
+    trigger: device
+  conditions: []
+  actions:
+  - action: fan.decrease_speed
+    metadata: {}
+    data:
+      percentage_step: 20
+    target:
+      entity_id: fan.officefancontrol_exhaust_fan
+  mode: single
+- id: '1762870102404'
+  alias: Office Fan Speed Up (Double Click)
+  description: ''
+  triggers:
+  - device_id: 9277ce9e2c5a2251d4f24be3d26ce69b
+    domain: zha
+    type: remote_button_double_press
+    subtype: dim_up
+    trigger: device
+  conditions: []
+  actions:
+  - action: fan.increase_speed
+    metadata: {}
+    data:
+      percentage_step: 20
+    target:
+      entity_id: fan.officefancontrol_exhaust_fan
+  mode: single
+- id: '1762870175935'
+  alias: Office Fan Full Speed (Triple Click Up)
+  description: ''
+  triggers:
+  - device_id: 9277ce9e2c5a2251d4f24be3d26ce69b
+    domain: zha
+    type: remote_button_triple_press
+    subtype: dim_up
+    trigger: device
+  conditions: []
+  actions:
+  - action: fan.set_percentage
+    metadata: {}
+    data:
+      percentage: 100
+    target:
+      entity_id: fan.officefancontrol_exhaust_fan
+  mode: single
+- id: '1762870258833'
+  alias: Office Fan Speed Standard Speed (Triple Click Down)
+  description: ''
+  triggers:
+  - device_id: 9277ce9e2c5a2251d4f24be3d26ce69b
+    domain: zha
+    type: remote_button_triple_press
+    subtype: dim_down
+    trigger: device
+  conditions: []
+  actions:
+  - action: fan.set_percentage
+    metadata: {}
+    data:
+      percentage: 25
+    target:
+      entity_id: fan.officefancontrol_exhaust_fan
   mode: single

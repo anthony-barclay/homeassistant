@@ -1,0 +1,17 @@
+substitutions:
+  name: everything-presence-one-3fdeac
+  friendly_name: Everything Presence One Living Room
+packages:
+  Everything Smart Technology.Everything Presence One: github://everythingsmarthome/everything-presence-one/everything-presence-one-sen0609-ble.yaml@main
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+api:
+  encryption:
+    key: neDVd0pyVd08rFmp3EuZh+Ge/k3v2FFc4N/7Ud3HrRU=
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password

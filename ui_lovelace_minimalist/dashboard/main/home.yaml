@@ -90,9 +90,10 @@ cards:
 
       sensor_label_1: sensor.bathroom_temperature
       sensor_label_2: sensor.bathroom_humidity
+      sensor_label_3: sensor.everything_presence_lite_6759ec_illuminance
 
       sensor_1:
-        entity_id: binary_sensor.bathroom_motion_sensor_motion
+        entity_id: binary_sensor.everything_presence_lite_6759ec_occupancy
         templates:
           - motion_animation
 
@@ -176,9 +177,7 @@ cards:
 
       sensor_label_1: sensor.hallway_temperature
       sensor_label_2: sensor.hallway_humidity
-      sensor_label_3: sensor.everything_presence_lite_hallway_ground_illuminance
-      sensor_label_4: sensor.everything_presence_lite_hallway_upper_illuminance
-
+      sensor_label_3: sensor.hallway_average_illuminance
       sensor_1:
         entity_id: binary_sensor.everything_presence_lite_hallway_ground_occupancy
         templates:
